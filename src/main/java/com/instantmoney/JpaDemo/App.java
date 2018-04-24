@@ -36,11 +36,10 @@ public class App
     	t.setAmount(185.0);
     	t.setTimestamp(LocalDateTime.now());*/
     	
-    	Balance b = new Balance(); 
-    	
+/*    	Balance b = new Balance(); 
     	BigDecimal value = new BigDecimal("5500");
     	b.setIdsender(7);
-    	b.setBalance(value);
+    	b.setBalance(value);*/
     
     	
        	EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
@@ -51,13 +50,13 @@ public class App
     	em.persist(s);
     	em.getTransaction().commit();
     	*/
-       	em.getTransaction().begin();
+/*       	em.getTransaction().begin();
     	em.persist(b);
-    	em.getTransaction().commit();
+    	em.getTransaction().commit();*/
     	
         //Sender sender = em.find(Sender.class,6);
         
-      System.out.println(b.toString());
+      //System.out.println(b.toString());
     	  	
     	
     }
