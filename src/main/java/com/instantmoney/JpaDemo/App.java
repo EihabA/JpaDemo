@@ -29,11 +29,11 @@ public class App
     	
     	Transactions t = new Transactions(); 
     	
-    	t.setIdtrans(6);
+    	t.setIdtrans(9);
     	t.setIdsender(4);
-    	t.setIdreceiver(2);
-    	t.setIdexchange(4);
-    	t.setAmount(1350.0);
+    	t.setIdreceiver(4);
+    	t.setIdexchange(2);
+    	t.setAmount(85.0);
     	t.setTimestamp(LocalDateTime.now());
     
     	
