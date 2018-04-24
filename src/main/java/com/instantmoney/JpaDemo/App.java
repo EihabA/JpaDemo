@@ -1,6 +1,6 @@
 package com.instantmoney.JpaDemo;
 
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -27,14 +27,20 @@ public class App
     	r.setR_name("Shobashy Yodi");
     	r.setRlocation("Hong Kong");*/
     	
-    	Transactions t = new Transactions(); 
+    	//Transactions t = new Transactions(); 
     	
-    	t.setIdtrans(9);
-    	t.setIdsender(4);
-    	t.setIdreceiver(4);
-    	t.setIdexchange(2);
-    	t.setAmount(85.0);
-    	t.setTimestamp(LocalDateTime.now());
+    	/*t.setIdtrans(10);
+    	t.setIdsender(3);
+    	t.setIdreceiver(1);
+    	t.setIdexchange(4);
+    	t.setAmount(185.0);
+    	t.setTimestamp(LocalDateTime.now());*/
+    	
+    	Balance b = new Balance(); 
+    	
+    	BigDecimal value = new BigDecimal("5500");
+    	b.setIdsender(7);
+    	b.setBalance(value);
     
     	
        	EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
@@ -46,12 +52,12 @@ public class App
     	em.getTransaction().commit();
     	*/
        	em.getTransaction().begin();
-    	em.persist(t);
+    	em.persist(b);
     	em.getTransaction().commit();
     	
         //Sender sender = em.find(Sender.class,6);
         
-      System.out.println(t.toString());
+      System.out.println(b.toString());
     	  	
     	
     }
