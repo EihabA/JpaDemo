@@ -38,14 +38,24 @@ public class Balance {
 		BigDecimal balance = getBalance(idsender);		
 		BigDecimal newBalance = null;
 	 
-		if (amount.compareTo(balance)>0)
+		try 
 		{
-			newBalance = balance.subtract(amount); 
-//			return newBalance;
+			if (amount.compareTo(balance)<=0);
+			 
+		}
+		catch (java.lang.ArithmeticException e)
+		{
+			System.out.println("Exception: not enough balance to withdraw");
 		}
 		
+		if (amount.compareTo(balance)>0)
+		{
+			newBalance = balance.subtract(amount);
+		}
+				
 		return newBalance; 
 	}
+	
 	@Override
 	public String toString() {
 		return "Balance [idsender=" + idsender + ", balance=" + balance + "]";
