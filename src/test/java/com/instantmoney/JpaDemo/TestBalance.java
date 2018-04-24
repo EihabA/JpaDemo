@@ -44,8 +44,7 @@ public void TestWithdraw()
 
 public String TestWithdraw2()
 {
-	int id =1;
-	
+	int id =1;	
 	tb.setIdsender(id);
 	tb.setBalance(result);
 	assertEquals(error, tb.withdraw(id, withdraw2));
