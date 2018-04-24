@@ -20,6 +20,10 @@ BigDecimal withdraw =  new BigDecimal ("200");
 
 BigDecimal result2 = new BigDecimal ("100"); 
 
+BigDecimal withdraw2 = new BigDecimal ("400");
+
+String error; 
+
 @Test
 public void TestTopUp() 
 {
@@ -36,6 +40,16 @@ public void TestWithdraw()
 	tb.setIdsender(id);
 	tb.setBalance(result);
 	assertEquals(result2, tb.withdraw(id, withdraw)); 
+}
+
+public String TestWithdraw2()
+{
+	int id =1;
+	
+	tb.setIdsender(id);
+	tb.setBalance(result);
+	assertEquals(error, tb.withdraw(id, withdraw2));
+	return error;
 }
 
 }
