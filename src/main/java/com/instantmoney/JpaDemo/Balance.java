@@ -18,22 +18,24 @@ public class Balance {
 	public void setIdsender(int idsender) {
 		this.idsender = idsender;
 	}
-	public BigDecimal getBalance() {
+	public BigDecimal getBalance(int idsender) {
 		return balance;
 	}
 	public void setBalance(BigDecimal balance) {
 		this.balance = balance;
 	} 
 	
-	public BigDecimal Topup(BigDecimal amount)
+	public BigDecimal Topup(int idsender, BigDecimal amount)
 	{
+		BigDecimal balance = getBalance(idsender);
 		BigDecimal newbalance; 
 		newbalance = balance.add(amount);
 		return newbalance; 
 	}
 	
-	public BigDecimal withdraw(BigDecimal amount) {
-		
+	public BigDecimal withdraw(int idsender, BigDecimal amount)  
+	{
+		BigDecimal balance = getBalance(idsender);		
 		BigDecimal newBalance = null;
 	 
 		if (amount.compareTo(balance)>0)
