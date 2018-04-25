@@ -27,17 +27,25 @@ public class Balance {
 	
 	public BigDecimal Topup(int idsender, BigDecimal amount)
 	{
-		BigDecimal balance = getBalance(idsender);
-		BigDecimal newbalance; 
-		newbalance = balance.add(amount);
-		return newbalance; 
+		//BigDecimal balance = getBalance(idsender);
+		if (balance!=null)
+		{
+		balance = balance.add(amount);
+		return balance; 
+		}
+		
+		else {
+			balance = balance.ZERO ;
+			balance = balance.add(amount);
+			return balance; 
+		}
 	}
 	
 	public BigDecimal withdraw(int idsender, BigDecimal amount)  
 	{
-		BigDecimal balance = getBalance(idsender);		
-		BigDecimal newBalance = null;
-	 
+		//BigDecimal balance = getBalance(idsender);		
+		//BigDecimal newBalance = null;
+		if (balance!=null)
 		try 
 		{
 			if (amount.compareTo(balance)<=0);
@@ -50,10 +58,10 @@ public class Balance {
 		
 		if (amount.compareTo(balance)>0)
 		{
-			newBalance = balance.subtract(amount);
+			balance = balance.subtract(amount);
 		}
 				
-		return newBalance; 
+		return balance; 
 	}
 	
 	@Override
