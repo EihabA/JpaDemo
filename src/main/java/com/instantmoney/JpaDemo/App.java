@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -17,68 +16,16 @@ public class App
 {
     public static void main( String[] args )
     {
-    	//Sender s = new Sender();
+       EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
     	
-    	//Receiver r = new Receiver(); 
+    	List<String> services = Arrays.asList("1.Transfer", "2. AddReceiver", "3. TopUp");
     	
-    	//Exchange e = new Exchange();
+    	System.out.println("Choose a service :");
     	
-    	/*e.setIdexchange(6);
-    	e.setE_name("Barclays");*/
-    	
-/*    	r.setIdreceiver(5);
-    	r.setR_name("Shobashy Yodi");
-    	r.setRlocation("Hong Kong");*/
-    	
-    	//Transactions t = new Transactions(); 
-    	
-    	/*t.setIdtrans(10);
-    	t.setIdsender(3);
-    	t.setIdreceiver(1);
-    	t.setIdexchange(4);
-    	t.setAmount(185.0);
-    	t.setTimestamp(LocalDateTime.now());*/
-    	
-/*    	Balance b = new Balance(); 
-    	BigDecimal value = new BigDecimal("5500");
-    	b.setIdsender(7);
-    	b.setBalance(value);*/
-    
-    	
-       	EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
-    	
-    	EntityManager em = emf.createEntityManager();
-    	
-    	/*em.getTransaction().begin();
-    	em.persist(s);
-    	em.getTransaction().commit();
-    	*/
-/*       	em.getTransaction().begin();
-    	em.persist(b);
-    	em.getTransaction().commit();*/
-    	
-        //Sender sender = em.find(Sender.class,6);
-        
-      //System.out.println(b.toString());
-    	
-    		
-    	//List<String> senders = new ArrayList<String>();
-    	
-    	//senders.add("Eihab");
-    	
-    	List<Sender> results = 
-    			em.createNativeQuery("select s.idsender, s.s_first_name, s.s_last_name, "
-    					+ "s.slocation from instant_money_transfer.sender s", 
-    					Sender.class).getResultList(); 
-    	
-    	for (Sender element : results)
+    	for (String element : services)
     	{
     		System.out.println(element);
     	}
-    	
-    	List<String> services = Arrays.asList("Transfer", "addReceiver", "TopUp");
-    	
-    	System.out.println("Chose a service:" + services);
     	
     	Scanner sc = new Scanner(System.in);
     	
@@ -90,29 +37,33 @@ public class App
     	 	
     	if (service.equalsIgnoreCase("TopUP"))
     	{
+    		EntityManager em = emf.createEntityManager();
+    		
     		System.out.println("input sender id: ");
     		
     		int id = scin.nextInt(); 
     		
-    		System.out.println("Input amount: ");
+    		Balance userBalance = em.find(Balance.class,  id); 
+    		
+    		BigDecimal startB = userBalance.getBalance();
+    		
+    		System.out.println("Your current Balance is, " + startB);
+       		
+    		Balance b = new Balance(id, startB);
+    		
+    		System.out.println("Input the topup amount: ");
     		
     		BigDecimal amt = sca.nextBigDecimal(); 
+    		    		
+    		b.Topup(amt);
     		
-    		Balance b = new Balance(); 
-    		
-    		BigDecimal nbal; 
-    		
-    		nbal = b.Topup(id, amt);
-    		
-    		System.out.println("New Balance :" + nbal);
-    		
-    		System.out.println("Service Selected: "+ service + ", idsender " + id + ", amount " + amt );
+    		System.out.println("Topping up your balance, total balance now is " 
+    		+ b.getBalance() + " for id Sender, " + id);
+        	
+    		scin.close();
+    		sca.close();
+    		sc.close(); 
     	}
-    	
-    	scin.close();
-		sca.close();
-		sc.close(); 
-    	
-    	    	   	
+        	   	
     }
 }
