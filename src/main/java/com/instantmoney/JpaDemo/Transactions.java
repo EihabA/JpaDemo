@@ -1,5 +1,6 @@
 package com.instantmoney.JpaDemo;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
@@ -13,8 +14,19 @@ public class Transactions {
 	private int idreceiver;
 	private int idsender;
 	private int idexchange;
-	private double amount; 
+	private BigDecimal amount; 
 	private LocalDateTime timestamp;
+	
+	public Transactions(BigDecimal amountToSend, int whoToReceive) {
+		
+		this.idreceiver = whoToReceive; 
+		this.amount = amountToSend; 
+	}
+	
+	public Transactions ()
+	{
+		
+	}
 	
 	public int getIdtrans() {
 		return idtrans;

@@ -70,11 +70,9 @@ public Balance()
 		em.close();
 	}
 	
-	public void withdraw(int idsender, BigDecimal amount)  
+	public void withdraw(BigDecimal amount)  
 	{
 		EntityManager em = emf.createEntityManager();
-		
-		em.getTransaction().begin();
 		
 		if (balance!=null)
 		try 
@@ -93,11 +91,17 @@ public Balance()
 			balance = balance.subtract(amount);
 		}
 		 
+		setBalance(balance);
+		
+		em.getTransaction().begin();
+		
 		em.createQuery("update Balance set balance = " + balance + "where idsender=" + idsender)
 	    .executeUpdate();
+		
+		em.flush();
 			
-			em.getTransaction().commit();
-			em.close();
+		em.getTransaction().commit();
+		em.close();
 	}
 	
 	@Override
