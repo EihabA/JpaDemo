@@ -72,6 +72,8 @@ public Balance()
 	
 	public void withdraw(BigDecimal amount)  
 	{
+		System.out.println("Entering the withdraw method: ......." + amount);
+		
 		EntityManager em = emf.createEntityManager();
 		
 		if (balance!=null)
@@ -86,12 +88,15 @@ public Balance()
 			System.out.println("Exception: not enough balance to withdraw");
 		}
 		
+		System.out.println("Amount is > 0 .......");
 		if (amount.compareTo(balance)>0)
 		{
 			balance = balance.subtract(amount);
 		}
 		 
 		setBalance(balance);
+		
+		System.out.println("balance after subtraction: " + balance);
 		
 		em.getTransaction().begin();
 		
@@ -108,6 +113,5 @@ public Balance()
 	public String toString() {
 		return "Balance [idsender=" + idsender + ", balance=" + balance + "]";
 	}
-	
 
 }

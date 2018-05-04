@@ -9,6 +9,7 @@ public class Exchange {
 	@Id
 	private int idexchange; 
 	private String e_name;
+	
 	public int getIdexchange() {
 		return idexchange;
 	}

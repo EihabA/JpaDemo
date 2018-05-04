@@ -17,7 +17,7 @@ public class Transactions {
 	private BigDecimal amount; 
 	private LocalDateTime timestamp;
 	
-	public Transactions(BigDecimal amountToSend, int whoToReceive) {
+	public Transactions(int whoToReceive, BigDecimal amountToSend) {
 		
 		this.idreceiver = whoToReceive; 
 		this.amount = amountToSend; 
@@ -52,10 +52,10 @@ public class Transactions {
 	public void setIdexchange(int idexchange) {
 		this.idexchange = idexchange;
 	}
-	public double getAmount() {
+	public BigDecimal getAmount() {
 		return amount;
 	}
-	public void setAmount(double amount) {
+	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
 	}
 	public LocalDateTime getTimestamp() {
