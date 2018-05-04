@@ -8,8 +8,6 @@ import org.junit.Test;
 
 public class TestBalance {
 	
-Balance tb = new Balance();
-
 BigDecimal initB = new BigDecimal("100"); 
 
 BigDecimal topup = new BigDecimal ("200"); 
@@ -22,32 +20,32 @@ BigDecimal result2 = new BigDecimal ("100");
 
 BigDecimal withdraw2 = new BigDecimal ("400");
 
+int id = 1; 
+
+Balance tb = new Balance(id, initB);
+
 String error; 
 
 @Test
 public void TestTopUp() 
 {
-	int id = 1; 
-	tb.setIdsender(id);
-	tb.setBalance(initB);
-	assertEquals(result, tb.Topup(id, topup));
+	tb.Topup(topup);
+	assertEquals("The new balance expected ", result, initB);
 	
 }
 
 public void TestWithdraw()
 {
-	int id =1;
-	tb.setIdsender(id);
 	tb.setBalance(result);
-	assertEquals(result2, tb.withdraw(id, withdraw)); 
+	tb.withdraw(withdraw);
+	assertEquals("The new balance after withdraw ", result2, result);
 }
 
 public String TestWithdraw2()
 {
-	int id =1;	
-	tb.setIdsender(id);
 	tb.setBalance(result);
-	assertEquals(error, tb.withdraw(id, withdraw2));
+	tb.withdraw(withdraw2);
+	assertEquals("The message after withdraw ", error, withdraw2);
 	return error;
 }
 
