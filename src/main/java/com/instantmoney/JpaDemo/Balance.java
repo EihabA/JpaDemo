@@ -43,7 +43,7 @@ public Balance()
 		this.balance = balance;
 	} 
 	
-	public void Topup(BigDecimal amount)
+	public synchronized void Topup(BigDecimal amount)
 	{
 		EntityManager em = emf.createEntityManager();
         	    
@@ -70,17 +70,19 @@ public Balance()
 		em.close();
 	}
 	
-	public void withdraw(BigDecimal amount)  
+	public synchronized void  withdraw(BigDecimal amount)  
 	{
 		System.out.println("Entering the withdraw method: ......." + amount);
 		
 		EntityManager em = emf.createEntityManager();
 		
+		System.out.println(amount.compareTo(balance));
+		
 		if (balance!=null)
 		try 
 		{
 			
-			if (amount.compareTo(balance)<=0);
+			if (amount.compareTo(balance)>0);
 			 
 		}
 		catch (java.lang.ArithmeticException e)
@@ -88,8 +90,7 @@ public Balance()
 			System.out.println("Exception: not enough balance to withdraw");
 		}
 		
-		System.out.println("Amount is > 0 .......");
-		if (amount.compareTo(balance)>0)
+		if (amount.compareTo(balance)<=0)
 		{
 			balance = balance.subtract(amount);
 		}

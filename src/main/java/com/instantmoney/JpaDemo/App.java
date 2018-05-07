@@ -3,7 +3,6 @@ package com.instantmoney.JpaDemo;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -91,6 +90,12 @@ public class App
     		
     		int idReceiver = scin.nextInt(); 
     		
+    		// Construct a Receiver class
+    		
+    		Receiver receiver = em.find(Receiver.class,  idReceiver); 
+    		
+    		System.out.println(receiver);//Receiver r = new Receiver(idReceiver,)
+    		
     		// get the amount to transfer     		
     		System.out.println("enter the amount you would like to send: ");
     		
@@ -112,9 +117,27 @@ public class App
     		trx.setIdexchange(idexc);
     		trx.setIdsender(user);
     		
-    		// call the withdraw method to deduct the amount from user balance
-    		
     		b.withdraw(amountosend);
+    		
+    		BigDecimal initialReceiverBalance = receiver.getBalance(); 
+    		
+    		Receiver r = new Receiver (idReceiver, initialReceiverBalance);
+    				
+    		BigDecimal newReceiverBalance=r.updateBalance(amountosend);
+    		
+    		System.out.println("Receiver balance: " + newReceiverBalance);
+    		
+    		r.setBalance(newReceiverBalance);
+    		
+    		em.getTransaction().begin();
+    		
+    		em.createQuery("update Receiver set balance = " + newReceiverBalance + "where idReceiver=" + idReceiver)
+    	    .executeUpdate();
+    		
+    		em.flush();
+    			
+    		em.getTransaction().commit();
+    		em.close();
     		
     		System.out.println("the balance is now: " + b.getBalance());
     		
