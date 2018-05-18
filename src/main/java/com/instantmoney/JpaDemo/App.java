@@ -9,7 +9,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 /**
- * to connect to Mysql database instant Money and update the senders table
+ * to run  money transfer services, add sender, transaction, add receiver and topup balance 
  *
  */
 public class App 
@@ -20,29 +20,10 @@ public class App
        
        EntityManager em = emf.createEntityManager(); 
        
-       // Find out the user 
-       Scanner s = new Scanner(System.in); 
+       System.out.println("starting program");
        
-       System.out.println("Input your idSender: ");
-       int user = s.nextInt(); 
-       
-       // Set the user calling the sender constructor
-       Sender sender = em.find(Sender.class, user);
-       
-       System.out.println("your User name and id is: "+ sender);
-       
-       // get the available balance of this user
-		Balance userBalance = em.find(Balance.class,  user); 
-		
-		BigDecimal startB = userBalance.getBalance();
-		
-		System.out.println("Your current Balance is, " + startB);
-  		
-		// call the balance constructor 
-		Balance b = new Balance(user, startB);
-    	
-       // list all services available 
-    	List<String> services = Arrays.asList("1.Transfer", "2. AddReceiver", "3. TopUp");
+   	// list all services available 
+    	List<String> services = Arrays.asList("1.Transfer", "2. AddReceiver", "3. TopUp", "4. AddSender");
     	
     	System.out.println("Choose a service :");
     	
@@ -51,15 +32,71 @@ public class App
     		System.out.println(element);
     	}
     	
-    	Scanner sc = new Scanner(System.in);
+       	Scanner sc = new Scanner(System.in);
+       	
+       	String service = sc.next();
+       	
+       	//Scanner scin = new Scanner(System.in); 
+       	
+       	//Scanner sca = new Scanner(System.in);
+       	
+    	// if add sender service is selected
     	
-    	String service = sc.next();
+    	if (service.equalsIgnoreCase("addsender"))
+    	{
+    		//find out his first name and last name and location 
+    		Sender newSender = new Sender();
+    		//newSender.setIdsender(1);
+    		
+    		System.out.println("Please enter your first name ");
+    		
+    		String firstName = sc.next(); 
+    		newSender.setS_first_name(firstName);
+    		
+    		//sc.close();
+    		
+    		System.out.println("Please enter your last name");
+    		
+    		String lastName = sc.next();
+    		newSender.setS_last_name(lastName);
+    		
+    		System.out.println("Please enter your location");
+    		
+    		String slocation = sc.next(); 
+    		newSender.setSlocation(slocation);
+    		
+    		em.getTransaction().begin();
+    		
+    		em.persist(newSender);
+    		
+    		em.getTransaction().commit();
+    		
+    		sc.close();
+    		System.out.println("Your user id is " + newSender.getIdsender() + "Name is: "
+    		+ newSender.getS_first_name() + " " + newSender.getS_last_name());
+    		return; 
+    	}
+    	// else Find out the user 
+    	//Scanner s = new Scanner(System.in); 
+    		System.out.println("Input your idSender: ");
+    	       int user = sc.nextInt(); 
+    	       
+    	       // Set the user calling the sender constructor
+    	       Sender sender = em.find(Sender.class, user);
+    	       
+    	       System.out.println("your User name and id is: "+ sender);
+    	       
+    	       // get the available balance of this user
+    			Balance userBalance = em.find(Balance.class,  user); 
+    			
+    			BigDecimal startB = userBalance.getBalance();
+    			
+    			System.out.println("Your current Balance is, " + startB);
+    	  		
+    			// call the balance constructor 
+    			Balance b = new Balance(user, startB);
     	
-    	Scanner scin = new Scanner(System.in); 
-    	
-    	Scanner sca = new Scanner(System.in);
-    	
-    	// if TopUp service is selected
+           	// if TopUp service is selected
     	 	
     	if (service.equalsIgnoreCase("TopUP"))
     	{
@@ -69,7 +106,7 @@ public class App
     		System.out.println("Input the topup amount: ");
     		
     		// get the amount to top up 
-    		BigDecimal amt = sca.nextBigDecimal(); 
+    		BigDecimal amt = sc.nextBigDecimal(); 
     		
     		// Call the topup method 
     		    		
@@ -78,9 +115,9 @@ public class App
     		System.out.println("Topping up your balance, total balance now is " 
     		+ b.getBalance() + " for id Sender, " + user);
         	
-    		scin.close();
-    		sca.close();
-    		sc.close(); 
+    		//scin.close();
+    		//sca.close();
+    		
     	}
     	
     	// If service selected is to transfer money to a receiver 
@@ -88,7 +125,7 @@ public class App
     		
     		System.out.println("input the receiver id: ");
     		
-    		int idReceiver = scin.nextInt(); 
+    		int idReceiver = sc.nextInt(); 
     		
     		// Construct a Receiver class
     		
@@ -99,7 +136,7 @@ public class App
     		// get the amount to transfer     		
     		System.out.println("enter the amount you would like to send: ");
     		
-    		BigDecimal amountosend = sca.nextBigDecimal(); 
+    		BigDecimal amountosend = sc.nextBigDecimal(); 
     		
     		Transactions trx = new Transactions(idReceiver, amountosend);
     		
@@ -110,9 +147,9 @@ public class App
     		
     		System.out.println("Select which Exchange: ");
     		    		
-    		Scanner sxc = new Scanner(System.in); 
+    		//Scanner sxc = new Scanner(System.in); 
     		
-    		int idexc = sxc.nextInt(); 
+    		int idexc = sc.nextInt(); 
     		
     		trx.setIdexchange(idexc);
     		trx.setIdsender(user);
@@ -141,11 +178,11 @@ public class App
     		
     		System.out.println("the balance is now: " + b.getBalance());
     		
-    		sxc.close();
+    		//sxc.close();
     		
     	}
     	
-    	s.close();
+    	sc.close();
         	   	
     }
 }
